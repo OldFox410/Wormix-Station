@@ -20,6 +20,12 @@ public record struct GrabAttemptReleaseEvent(
 }
 
 [ByRefEvent]
+public record struct BeforeReleaseEvent()
+{
+    public bool Canceled = false;
+}
+
+[ByRefEvent]
 public record struct CheckGrabbedEvent(bool IsGrabbed = false);
 
 [ByRefEvent]

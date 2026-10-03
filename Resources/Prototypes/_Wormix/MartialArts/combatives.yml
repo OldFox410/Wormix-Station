@@ -1,0 +1,94 @@
+
+- type: martialArt
+  id: Combatives
+  martialArtsForm: Combatives
+  roundstartCombos: CombativesMoves
+
+- type: comboList
+  id: CombativesMoves
+  combos:
+  - CombativesChoke          # Grab -> Grab -> Grab -> Grab
+  - CombativesRestrain       # Grab -> Grab -> Disarm
+  - CombativesPummel         # Disarm -> Disarm -> Harm
+  - CombativesKnockdown      # Harm -> Harm -> Disarm
+  - CombativesThrow          # Grab -> Disarm
+  - CombativesSlitThroat     # Grab -> Harm
+  - CombativesWeakening      # Disarm -> Disarm
+  - CombativesDisarm         # Harm -> Disarm
+
+- type: combo
+  id: CombativesRestrain
+  name: Restrain
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - Grab
+  - Disarm
+  event: !type:CombativesRestrainPerformedEvent
+
+- type: combo
+  id: CombativesThrow
+  name: Throw
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - Disarm
+  event: !type:CombativesThrowPerformedEvent
+
+- type: combo
+  id: CombativesChoke
+  name: Choke
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - Grab
+  - Grab
+  - Grab
+  event: !type:CombativesChokePerformedEvent
+
+- type: combo
+  id: CombativesSlitThroat
+  name: Slit Throat
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - Harm
+  event: !type:CombativesSlitThroatPerformedEvent
+
+- type: combo
+  id: CombativesKnockdown
+  name: Knockdown
+  martialArtsForm: Combatives
+  attacks:
+  - Harm
+  - Harm
+  - Disarm
+  event: !type:CombativesKnockdownPerformedEvent
+
+- type: combo
+  id: CombativesWeakening
+  name: Weakening
+  martialArtsForm: Combatives
+  attacks:
+  - Disarm
+  - Disarm
+  event: !type:CombativesWeakeningPerformedEvent
+
+- type: combo
+  id: CombativesPummel
+  name: Pummel
+  martialArtsForm: Combatives
+  attacks:
+  - Disarm
+  - Disarm
+  - Harm
+  event: !type:CombativesPummelPerformedEvent
+
+- type: combo
+  id: CombativesDisarm
+  name: Disarm
+  martialArtsForm: Combatives
+  attacks:
+  - Harm
+  - Disarm
+  event: !type:CombativesDisarmPerformedEvent

@@ -62,6 +62,7 @@ using Content.Shared.StatusEffect;
 using Content.Shared.StatusEffectNew;
 using Content.Shared.StatusEffectNew.Components;
 using Content.Shared.Stunnable;
+using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
@@ -113,6 +114,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedSprintingSystem _sprinting = default!;
     [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!; // Wormix EDIT
+    [Dependency] private readonly TagSystem _tag = default!; // Wormix EDIT
 
     public static readonly EntProtoId MartsGenericSlow = "MartialArtsGenericSlowdownEffect";
 
@@ -122,6 +124,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         InitializeKravMaga();
         InitializeSleepingCarp();
         InitializeCqc();
+        InitializeCombatives();
         InitializeCorporateJudo();
         InitializeCapoeira();
         InitializeDragon();
@@ -133,6 +136,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, CheckGrabOverridesEvent>(CheckGrabStageOverride);
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ShotAttemptedEvent>(OnShotAttempt);
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ComboAttackPerformedEvent>(OnComboAttackPerformed);
+        SubscribeLocalEvent<MartialArtsKnowledgeComponent, GetMeleeAttackRateEvent>(OnArtGetMeleeAttackRate);
 
         SubscribeLocalEvent<KravMagaSilencedComponent, SpeakAttemptEvent>(OnSilencedSpeakAttempt);
 
@@ -300,6 +304,19 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             case MartialArtsForms.Capoeira:
                 OnCapoeiraAttackPerformed(ent, ref args);
                 break;
+            case MartialArtsForms.Combatives:
+                OnCombativesAttackPerformed(ent, ref args);
+                break;
+        }
+    }
+
+    private void OnArtGetMeleeAttackRate(Entity<MartialArtsKnowledgeComponent> ent, ref GetMeleeAttackRateEvent args)
+    {
+        switch (ent.Comp.MartialArtsForm)
+        {
+            case MartialArtsForms.Combatives:
+                OnCombativesMeleeAttackRate(ent, ref args);
+                    break;
         }
     }
 

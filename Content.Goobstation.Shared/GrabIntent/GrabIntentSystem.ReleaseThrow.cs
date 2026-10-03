@@ -36,6 +36,11 @@ public sealed partial class GrabIntentSystem
         if (_timing.CurTime < pullable.Comp.NextEscapeAttempt)
             return GrabResistResult.TooSoon;
 
+        var beforeRelease = new BeforeReleaseEvent();
+        RaiseLocalEvent(pullable, ref beforeRelease);
+        if (beforeRelease.Canceled)
+            return GrabResistResult.Failed;
+
         var seedArray = new List<int> { (int) _timing.CurTick.Value, GetNetEntity(pullable.Owner).Id };
         var seed = SharedRandomExtensions.HashCodeCombine(seedArray);
         var rand = new Random(seed);
