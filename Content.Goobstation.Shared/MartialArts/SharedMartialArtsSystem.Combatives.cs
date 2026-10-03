@@ -3,6 +3,14 @@ using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.GrabIntent;
 using Content.Goobstation.Shared.MartialArts.Components;
 using Content.Goobstation.Shared.MartialArts.Events;
+using Content.Shared._Shitmed.Medical.Surgery.Traumas.Components;
+using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
+using Content.Shared._Shitmed.Targeting;
+using Content.Shared.Bed.Sleep;
+using Content.Shared.Damage;
+using Content.Shared.Damage.Components;
+using Content.Shared.Damage.Events;
+using Content.Shared.Execution;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
 using Content.Shared.Item;
@@ -12,6 +20,7 @@ using Content.Shared.Movement.Pulling.Events;
 using Content.Shared.Projectiles;
 using Content.Shared.Speech;
 using Content.Shared.Standing;
+using Content.Shared.Stunnable;
 using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Components;
@@ -48,12 +57,11 @@ public partial class SharedMartialArtsSystem
         SubscribeLocalEvent<CombativesRestrainComponent, AttackAttemptEvent>(OnRestrainAttackAttempt);
         SubscribeLocalEvent<CombativesRestrainComponent, SpeakAttemptEvent>(OnRestrainSpeakAttempt);
         SubscribeLocalEvent<CombativesRestrainComponent, PreventCollideEvent>(OnRestrainPreventCollide);
+        SubscribeLocalEvent<CombativesRestrainComponent, KnockDownAttemptEvent>(OnKnockDownAttempt);
 
         SubscribeLocalEvent<CombativesRestrainComponent, StoodEvent>(OnRestrainStood);
         SubscribeLocalEvent<CombativesRestrainComponent, PullStoppedMessage>(OnRestrainStopped);
     }
-
-    private static readonly ProtoId<TagPrototype>[] AllowedTags = ["CombatKnife"];
 
     #region Generic Methods
 
@@ -103,6 +111,18 @@ public partial class SharedMartialArtsSystem
                     || !TryComp<GrabbableComponent>(args.Target, out var grabbable))
                     return;
                 grabbable.NextEscapeAttempt = _timing.CurTime.Add(TimeSpan.FromSeconds(2));
+                break;
+            case ComboAttackType.Harm:
+                // Leg sweep
+                if (!TryComp<StandingStateComponent>(ent.Owner, out var standing)
+                    || standing.Standing
+                    || !TryComp<StandingStateComponent>(args.Target, out var targetStanding)
+                    || !targetStanding.Standing
+                    )
+                    break;
+
+                _stun.TryKnockdown(args.Target, TimeSpan.FromSeconds(5), true, drop: true);
+                ComboPopup(ent, args.Target, "Leg Sweep");
                 break;
         }
 
@@ -164,19 +184,59 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesThrow(Entity<CanPerformComboComponent> ent, ref CombativesThrowPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out var downed)
+            || downed
+            || !TryComp<PullableComponent>(target, out var pullable)
+            || !TryComp<PullerComponent>(ent, out var puller)
+            || !TryComp<GrabIntentComponent>(ent, out var grabIntent))
             return;
 
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
-        ComboPopup(ent, target, proto.ID);
+        var knockdownTime = TimeSpan.FromSeconds(proto.ParalyzeTime);
+
+        var ev = new BeforeStaminaDamageEvent(1f);
+        RaiseLocalEvent(target, ref ev);
+
+        knockdownTime *= ev.Value;
+
+        _stun.TryKnockdown(target, knockdownTime, true, false, HasComp<CombativesRestrainComponent>(target));
+
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+
+        _pulling.TryStopPull(target, pullable, ent, true);
+
+        var entPos = _transform.GetMapCoordinates(ent).Position;
+        var targetPos = _transform.GetMapCoordinates(target).Position;
+        var direction = targetPos - entPos; // vector from ent to target
+
+        _grabThrowing.Throw(target, ent, direction, 5, behavior: proto.DropItems);
+
+        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit3.ogg"), target);
+        ComboPopup(ent, target, proto.ID); // CorvaxGoob-Localization // proto.Name -> proto.ID
         ent.Comp.LastAttacks.Clear();
     }
 
     private void OnCombativesChoke(Entity<CanPerformComboComponent> ent, ref CombativesChokePerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out _)
+            || !TryComp<CombativesRestrainComponent>(target, out var restrain)
+            || !TryComp<PullerComponent>(ent, out var puller)
+            || !TryComp<GrabIntentComponent>(ent, out var grabIntent)
+            || !TryComp<PullableComponent>(target, out var pullable)
+            || !TryComp<GrabbableComponent>(target, out var grabbable))
             return;
+
+        if (TryComp<StaminaComponent>(target, out var stamina) && stamina.Critical)
+        {
+            _newStatus.TryAddStatusEffectDuration(target, "StatusEffectForcedSleeping", out _, TimeSpan.FromSeconds(30));
+        }
+        else
+        {
+            _stamina.TakeStaminaDamage(target, proto.StaminaDamage, source: ent, applyResistances: false);
+        }
+
+        restrain.HandledForcedStand = true;
+        _standingState.Stand(target, force: true);
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
@@ -186,12 +246,52 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesSlitThroat(Entity<CanPerformComboComponent> ent, ref CombativesSlitThroatPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out var downed)
+            || !TryComp<PullableComponent>(target, out var pullable)
+            || !TryComp<CombativesRestrainComponent>(target, out var restrain)
+            || restrain.Puller != ent.Owner
+            || !TryComp<TargetingComponent>(ent, out var targeting)
+            || targeting.Target != TargetBodyPart.Head)
             return;
 
-        _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
-        ComboPopup(ent, target, proto.ID);
-        ent.Comp.LastAttacks.Clear();
+        // Находим сущность части тела (Голова)
+        var (partType, symmetry) = _body.ConvertTargetBodyPart(targeting.Target);
+        var targetLimb = _body.GetBodyChildrenOfType(target, partType, symmetry: symmetry).FirstOrDefault();
+
+        var targetEntity = targetLimb.Id != default ? targetLimb.Id : target;
+
+        if (!TryComp<WoundableComponent>(targetLimb.Id, out var woundable)
+            || woundable.WoundableIntegrity <= 0)
+            return;
+
+        // Режущий урон для перерезания горла
+        var damage = new DamageSpecifier();
+        damage.DamageDict.Add("Piercing", proto.ExtraDamage);
+        _damageable.TryChangeDamage(targetEntity, damage, ignoreResistances: false, origin: ent, canMiss: false);
+
+        // Вызываем ранение "Slash" (глубокий порез / кровотечение)
+        if (_wound.TryInduceWound(targetLimb.Id, "Piercing", proto.ExtraDamage, out var woundInduced))
+        {
+            // Если у ранения есть своя логика костей/хрящей (например, гортань/трахея), применяем травму
+            var bone = woundable.Bone.ContainedEntities.FirstOrDefault();
+            if (bone != default)
+            {
+                _trauma.ApplyBoneTrauma(
+                    bone,
+                    (targetLimb.Id, woundable),
+                    (woundInduced.Value.Owner, EnsureComp<TraumaInflicterComponent>(woundInduced.Value.Owner)),
+                    proto.ExtraDamage
+                );
+            }
+
+            // Прекращаем захват после выполнения приема
+            _pulling.TryStopPull(target, pullable, ent, true);
+
+            // Звук режущего удара / всплеска крови
+            _audio.PlayPvs(new SoundPathSpecifier("/Audio/_Shitmed/Medical/Surgery/scalpel1.ogg"), target);
+            ComboPopup(ent, target, proto.ID);
+            ent.Comp.LastAttacks.Clear();
+        }
     }
 
     private void OnCombativesKnockdown(Entity<CanPerformComboComponent> ent, ref CombativesKnockdownPerformedEvent args)
@@ -199,6 +299,31 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out _))
             return;
+
+        var restrained = HasComp<ArmbarredComponent>(ent);
+
+
+        if (TryComp<PullableComponent>(ent, out var pullable))
+            _pulling.TryStopPull(ent, pullable, target, true);
+
+        DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * (restrained ? 4 : 1), out _);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (restrained ? 8 : 1), applyResistances: true);
+
+        if (restrained)
+        {
+            _grabThrowing.Throw(target,
+                ent,
+                _transform.GetMapCoordinates(ent).Position - _transform.GetMapCoordinates(target).Position,
+                5,
+                behavior: proto.DropItems);
+
+            if (TryComp<StandingStateComponent>(ent.Owner, out var standing) && !standing.Standing)
+            {
+                if (HasComp<KnockedDownComponent>(ent.Owner))
+                    RemComp<KnockedDownComponent>(ent.Owner);
+                _standingState.Stand(ent.Owner, standing);
+            }
+        }
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
@@ -211,7 +336,10 @@ public partial class SharedMartialArtsSystem
             || !TryUseMartialArt(ent, proto, out var target, out _))
             return;
 
-        // ВАЖНО: Не делаем ent.Comp.LastAttacks.Clear(), чтобы Disarm -> Disarm переходил в Pummel!
+        _movementMod.TryUpdateMovementSpeedModDuration(target, MartsGenericSlow, TimeSpan.FromSeconds(5), 0.5f, 0.5f);
+
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
     }
@@ -221,6 +349,8 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out _))
             return;
+
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
@@ -233,9 +363,20 @@ public partial class SharedMartialArtsSystem
             || !TryUseMartialArt(ent, proto, out var target, out _))
             return;
 
+        if (!_hands.TryGetActiveItem(target, out var activeItem))
+            return;
+        if (!_hands.TryDrop(target, activeItem.Value))
+            return;
+        if (!_hands.TryGetEmptyHand(ent.Owner, out var emptyHand))
+            return;
+        if (!_hands.TryPickup(ent, activeItem.Value, emptyHand))
+            return;
+
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
         ent.Comp.LastAttacks.Clear();
+
+        _hands.SetActiveHand(ent.Owner, emptyHand);
     }
 
     #endregion
@@ -272,6 +413,11 @@ public partial class SharedMartialArtsSystem
         args.Cancel();
     }
 
+    private void OnKnockDownAttempt(Entity<CombativesRestrainComponent> ent, ref KnockDownAttemptEvent args)
+    {
+        args.Cancelled = true;
+    }
+
     private void OnRestrainPreventCollide(Entity<CombativesRestrainComponent> ent, ref PreventCollideEvent args)
     {
         // Проверяем, является ли другой объект коллизии снарядом
@@ -291,11 +437,17 @@ public partial class SharedMartialArtsSystem
 
     private void OnRestrainStood(Entity<CombativesRestrainComponent> ent, ref StoodEvent args)
     {
-        if (!TryComp<PullableComponent>(ent, out var pullable))
+        if (!TryComp<PullableComponent>(ent, out var pullable) || ent.Comp.HandledForcedStand)
+        {
+            ent.Comp.HandledForcedStand = false;
             return;
+        }
 
         _virtualItem.DeleteInHandsMatching(ent, ent.Comp.Puller);
         _pulling.TryStopPull(ent, pullable, ent.Comp.Puller, true);
+
+        CheckAndDropIfUnconscious(ent);
+
         RemComp<CombativesRestrainComponent>(ent);
     }
 
@@ -306,10 +458,25 @@ public partial class SharedMartialArtsSystem
 
         _virtualItem.DeleteInHandsMatching(ent, ent.Comp.Puller);
 
-        if (!_status.HasStatusEffect(ent, "Stun"))
-            _status.TryRemoveStatusEffect(ent, "KnockedDown");
+        CheckAndDropIfUnconscious(ent);
 
         RemComp<CombativesRestrainComponent>(ent);
+    }
+
+    private bool CheckAndDropIfUnconscious(EntityUid uid)
+    {
+        var isSleeping = HasComp<SleepingComponent>(uid);
+        var isStaminaCrit = TryComp<StaminaComponent>(uid, out var stamina) && stamina.Critical;
+
+        if (isSleeping || isStaminaCrit)
+        {
+            // Укладываем на пол без автоматического подъема (autoStand: false)
+            _stun.TryKnockdown(uid, TimeSpan.FromSeconds(5), autoStand: false, force: true);
+            _standingState.Down(uid);
+            return true;
+        }
+
+        return false;
     }
 
 

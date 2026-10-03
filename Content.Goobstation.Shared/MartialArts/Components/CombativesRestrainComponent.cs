@@ -12,4 +12,6 @@ public sealed partial class CombativesRestrainComponent : Component
 {
     [ViewVariables(VVAccess.ReadOnly), AutoNetworkedField]
     public EntityUid Puller;
+
+    public bool HandledForcedStand;
 }

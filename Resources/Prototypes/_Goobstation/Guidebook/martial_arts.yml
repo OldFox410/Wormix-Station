@@ -51,3 +51,8 @@
   id: DragonKungFu
   name: guide-entry-dragon-kung-fu
   text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/DragonKungFu.xml"
+
+- type: guideEntry
+  id: Combatives
+  name: guide-entry-combatives
+  text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/Combatives.xml"

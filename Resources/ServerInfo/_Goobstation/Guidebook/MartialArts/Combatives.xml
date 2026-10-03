@@ -1,0 +1,80 @@
+<Document>
+
+    ### Удушение (Choke)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+  </Box>
+
+  Наносит урон по выносливости. При критическом истощении выносливости погружает цель в глубокий сон.
+
+  ### Захват и удержание (Restrain)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Переводит захват в жесткую фазу, принудительно удерживая цель на ногах и блокируя ей возможность вести огонь и падать на пол.
+
+  ### Избиение (Pummel)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Серия быстрых ударов, наносящая урон ушибами и оглушающая противника.
+
+  ### Нокдаун (Knockdown)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Сбивает противника с ног, нанося урон выносливости и заставляя выронить предметы из рук.
+
+  ### Бросок CQC (Throw)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Мощный бросок через себя, швыряющий тушку в направлении взгляда и наносящий урон от падения.
+
+  ### Перерезание горла (Slit Throat)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Выполняется с ножом при прицеле в голову из захвата. Наносит точечный колотый урон (Piercing) и вызывает тяжелое артериальное кровотечение.
+
+  ### Ослабление (Weakening)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Быстрый сбивающий удар, временно снижающий выносливость и замедляющий атаки противника.
+
+  ### Обезоруживание (Disarm)
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Выбивает активное оружие из рук противника и блокирует возможность атаковать на несколько секунд.
+
+</Document>

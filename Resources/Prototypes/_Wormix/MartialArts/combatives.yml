@@ -34,6 +34,9 @@
   - Grab
   - Disarm
   event: !type:CombativesThrowPerformedEvent
+  canDoWhileProne: false
+  staminaDamage: 25
+  paralyzeTime: 7
 
 - type: combo
   id: CombativesChoke
@@ -45,6 +48,7 @@
   - Grab
   - Grab
   event: !type:CombativesChokePerformedEvent
+  staminaDamage: 200
 
 - type: combo
   id: CombativesSlitThroat
@@ -64,6 +68,8 @@
   - Harm
   - Disarm
   event: !type:CombativesKnockdownPerformedEvent
+  staminaDamage: 30
+  extraDamage: 15
 
 - type: combo
   id: CombativesWeakening
@@ -73,6 +79,7 @@
   - Disarm
   - Disarm
   event: !type:CombativesWeakeningPerformedEvent
+  staminaDamage: 20
 
 - type: combo
   id: CombativesPummel
@@ -83,6 +90,7 @@
   - Disarm
   - Harm
   event: !type:CombativesPummelPerformedEvent
+  staminaDamage: 75
 
 - type: combo
   id: CombativesDisarm
