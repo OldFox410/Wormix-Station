@@ -125,6 +125,14 @@ public partial class SharedMartialArtsSystem
         args.Multipliers *= 3f;
     }
 
+
+    private void OnCombativesGrabEvent(Entity<MartialArtsKnowledgeComponent> end, ref CheckGrabOverridesEvent args)
+    {
+        if (args.Stage > GrabStage.No)
+            args.Stage = GrabStage.Hard;
+    }
+
+
     #endregion
 
     #region Combo Methods

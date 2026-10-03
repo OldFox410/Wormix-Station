@@ -24,7 +24,6 @@
 //
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System.Linq;
 using Content.Goobstation.Common.Grab;
 using Content.Goobstation.Common.MartialArts;
 using Content.Goobstation.Shared.Changeling.Components;
@@ -73,6 +72,7 @@ using Robust.Shared.Physics.Components;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Random;
 using Robust.Shared.Timing;
+using System.Linq;
 
 namespace Content.Goobstation.Shared.MartialArts;
 
@@ -316,7 +316,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         {
             case MartialArtsForms.Combatives:
                 OnCombativesMeleeAttackRate(ent, ref args);
-                    break;
+                break;
         }
     }
 
@@ -434,8 +434,21 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     private void CheckGrabStageOverride<T>(EntityUid uid, T component, CheckGrabOverridesEvent args)
         where T : GrabStagesOverrideComponent
     {
-        if (args.Stage == GrabStage.Soft)
-            args.Stage = component.StartingStage;
+        if (TryComp<StandingStateComponent>(args.Target, out var standing) && !standing.Standing)
+        {
+            if (args.Stage == GrabStage.Soft)
+                args.Stage = component.StartingStage;
+        }
+
+        if (component is MartialArtsKnowledgeComponent ent)
+        {
+            switch (ent.MartialArtsForm)
+            {
+                case MartialArtsForms.Combatives:
+                    OnCombativesGrabEvent((uid, ent), ref args);
+                    break;
+            }
+        }
     }
 
     private void OnSilencedSpeakAttempt(Entity<KravMagaSilencedComponent> ent, ref SpeakAttemptEvent args)
