@@ -90,6 +90,17 @@ martial-arts-combo-JudoThrow = броском дзюдо
 martial-arts-combo-JudoArmbar = захватом руки рычагом
 martial-arts-combo-JudoWheelThrow = колесом
 martial-arts-combo-JudoDisarming = обезоручивание
+# Combatives
+martial-arts-combo-CombativesChoke = удушением
+martial-arts-combo-CombativesRestrain = сдерживающим захватом
+martial-arts-combo-CombativesRestrainWithGun = сдерживающим захватом
+martial-arts-combo-CombativesPummel = градом ударов
+martial-arts-combo-CombativesKnockdown = контр-приёмом
+martial-arts-combo-CombativesThrow = броском
+martial-arts-combo-CombativesThrowWithGun = броском
+martial-arts-combo-CombativesSlitThroat = перерезанием горла
+martial-arts-combo-CombativesWeakening = ослабляющим ударом
+martial-arts-combo-CombativesDisarm = разоружением
 # Ninjutsu
 martial-arts-combo-BiteTheDust = канув в пыли
 martial-arts-combo-DirtyKill = грязным убийством

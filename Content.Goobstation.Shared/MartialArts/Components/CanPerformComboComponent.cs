@@ -35,6 +35,9 @@ public sealed partial class CanPerformComboComponent : Component
     [DataField]
     public List<ComboPrototype> AllowedCombos = new();
 
+    [DataField, AutoNetworkedField]
+    public HashSet<MartialArtsForms> ArtsForms = new();
+
     [DataField]
     public List<ProtoId<ComboPrototype>> RoundstartCombos = new();
 

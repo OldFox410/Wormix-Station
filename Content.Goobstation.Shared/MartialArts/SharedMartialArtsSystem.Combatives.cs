@@ -63,7 +63,14 @@ public partial class SharedMartialArtsSystem
         SubscribeLocalEvent<CombativesRestrainComponent, PullStoppedMessage>(OnRestrainStopped);
     }
 
+    private static ProtoId<TagPrototype> _combatKnife = "CombatKnife";
+    private static ProtoId<TagPrototype>[] _allowedWeaponTags = { _combatKnife, "Sidearm" };
     #region Generic Methods
+
+    private bool IsWeaponAllowedForCombatives(EntityUid user, EntityUid weapon)
+    {
+        return weapon == user || _tag.HasAnyTag(weapon, _allowedWeaponTags);
+    }
 
     private void OnGrantCombativesMapInit(Entity<GrantCombativesComponent> ent, ref MapInitEvent args)
     {
@@ -118,6 +125,7 @@ public partial class SharedMartialArtsSystem
                     || standing.Standing
                     || !TryComp<StandingStateComponent>(args.Target, out var targetStanding)
                     || !targetStanding.Standing
+                    || HasComp<ArmbarredComponent>(ent.Owner)
                     )
                     break;
 
@@ -160,7 +168,13 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesRestrain(Entity<CanPerformComboComponent> ent, ref CombativesRestrainPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out _)
+            || !TryComp<PullableComponent>(target, out var pullable)
+            || pullable.Puller != ent
+            || !TryComp<GrabbableComponent>(target, out var grabbable)
+            || grabbable.GrabStage != GrabStage.Hard
+            || !TryComp<StandingStateComponent>(target, out var standingState)
+            || !standingState.Standing)
             return;
 
         if (!HasComp<CombativesRestrainComponent>(target))
@@ -198,7 +212,12 @@ public partial class SharedMartialArtsSystem
 
         knockdownTime *= ev.Value;
 
-        _stun.TryKnockdown(target, knockdownTime, true, false, HasComp<CombativesRestrainComponent>(target));
+        if (TryComp<CombativesRestrainComponent>(target, out var restrain))
+        {
+            Unrestrain((target, restrain));
+        }
+
+        _stun.TryKnockdown(target, knockdownTime, true, false, restrain != null);
 
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
 
@@ -251,7 +270,9 @@ public partial class SharedMartialArtsSystem
             || !TryComp<CombativesRestrainComponent>(target, out var restrain)
             || restrain.Puller != ent.Owner
             || !TryComp<TargetingComponent>(ent, out var targeting)
-            || targeting.Target != TargetBodyPart.Head)
+            || targeting.Target != TargetBodyPart.Head
+            || !TryComp<HandsComponent>(ent, out var hands)
+            || !_tag.HasTag(_hands.GetActiveItem((ent, hands)).GetValueOrDefault(), _combatKnife))
             return;
 
         // Находим сущность части тела (Голова)
@@ -333,12 +354,23 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesWeakening(Entity<CanPerformComboComponent> ent, ref CombativesWeakeningPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out _)
+            || !TryComp<StandingStateComponent>(target, out var standingState)
+            || !standingState.Standing)
             return;
 
         _movementMod.TryUpdateMovementSpeedModDuration(target, MartsGenericSlow, TimeSpan.FromSeconds(5), 0.5f, 0.5f);
 
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+
+        if (TryComp<HandsComponent>(target, out var hands)
+            && _hands.TryGetActiveItem((target, hands), out var activeItem)
+            && activeItem.HasValue
+            && TryComp<ChamberMagazineAmmoProviderComponent>(activeItem.Value, out var chambered)
+            && chambered.BoltClosed == true)
+        {
+            _gun.ToggleBolt(activeItem.Value, chambered, ent);
+        }
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
@@ -347,7 +379,9 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesPummel(Entity<CanPerformComboComponent> ent, ref CombativesPummelPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out _)
+            || !TryComp<StandingStateComponent>(target, out var standingState)
+            || !standingState.Standing)
             return;
 
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
@@ -443,12 +477,8 @@ public partial class SharedMartialArtsSystem
             return;
         }
 
-        _virtualItem.DeleteInHandsMatching(ent, ent.Comp.Puller);
         _pulling.TryStopPull(ent, pullable, ent.Comp.Puller, true);
-
-        CheckAndDropIfUnconscious(ent);
-
-        RemComp<CombativesRestrainComponent>(ent);
+        Unrestrain(ent);
     }
 
     private void OnRestrainStopped(Entity<CombativesRestrainComponent> ent, ref PullStoppedMessage args)
@@ -456,10 +486,13 @@ public partial class SharedMartialArtsSystem
         if (args.PullerUid != ent.Comp.Puller)
             return;
 
+        Unrestrain(ent);
+    }
+
+    private void Unrestrain(Entity<CombativesRestrainComponent> ent)
+    {
         _virtualItem.DeleteInHandsMatching(ent, ent.Comp.Puller);
-
         CheckAndDropIfUnconscious(ent);
-
         RemComp<CombativesRestrainComponent>(ent);
     }
 

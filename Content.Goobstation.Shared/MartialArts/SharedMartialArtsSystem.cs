@@ -65,6 +65,7 @@ using Content.Shared.Tag;
 using Content.Shared.Weapons.Melee;
 using Content.Shared.Weapons.Melee.Events;
 using Content.Shared.Weapons.Ranged.Events;
+using Content.Shared.Weapons.Ranged.Systems;
 using Robust.Shared.Audio;
 using Robust.Shared.Audio.Systems;
 using Robust.Shared.Network;
@@ -113,8 +114,9 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     [Dependency] private readonly TraumaSystem _trauma = default!;
     [Dependency] private readonly MobThresholdSystem _mobThreshold = default!;
     [Dependency] private readonly SharedSprintingSystem _sprinting = default!;
-    [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!; // Wormix EDIT
-    [Dependency] private readonly TagSystem _tag = default!; // Wormix EDIT
+    [Dependency] private readonly SharedVirtualItemSystem _virtualItem = default!; // Wormix EDIT Start
+    [Dependency] private readonly TagSystem _tag = default!; 
+    [Dependency] private readonly SharedGunSystem _gun = default!; // Wormix EDIT End
 
     public static readonly EntProtoId MartsGenericSlow = "MartialArtsGenericSlowdownEffect";
 
@@ -257,6 +259,23 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             timer.LastMoveTime = _timing.CurTime;
         }
     }
+
+    // Wormix EDIT Start
+    // Если ты действительно захотел применять комбы из разных искусств в одном, прости. Мои искренние соболезнования, мне не хотелось учитывать этот кейс из-за структуры компонентов.
+    public bool IsWeaponAllowed(EntityUid user, EntityUid weapon, CanPerformComboComponent comp)
+    {
+        return comp.ArtsForms
+            .Any(m => IsWeaponAllowedForMartialArt(user, weapon, m));
+    }
+
+    private bool IsWeaponAllowedForMartialArt(EntityUid user, EntityUid weapon, MartialArtsForms martialArt)
+        => martialArt switch
+        {
+            MartialArtsForms.Combatives => IsWeaponAllowedForCombatives(user, weapon),
+            _ => user == weapon,
+        };
+
+    // Wormix Edit End
 
     #region Event Methods
 
@@ -426,7 +445,10 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             return;
 
         if (TryComp<CanPerformComboComponent>(ent, out var comboComponent))
+        {
             comboComponent.AllowedCombos.Clear();
+            comboComponent.ArtsForms.Clear();
+        }
 
         RemCompDeferred<DragonKungFuTimerComponent>(ent);
     }
@@ -612,11 +634,14 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     private void LoadCombos(ProtoId<ComboListPrototype> list, CanPerformComboComponent combo)
     {
         combo.AllowedCombos.Clear();
+        combo.ArtsForms.Clear();
         if (!_proto.TryIndex(list, out var comboListPrototype))
             return;
         foreach (var item in comboListPrototype.Combos)
         {
-            combo.AllowedCombos.Add(_proto.Index(item));
+            var proto = _proto.Index(item);
+            combo.AllowedCombos.Add(proto);
+            combo.ArtsForms.Add(proto.MartialArtsForm);
         }
     }
 

@@ -7,14 +7,16 @@
 - type: comboList
   id: CombativesMoves
   combos:
-  - CombativesChoke          # Grab -> Grab -> Grab -> Grab
-  - CombativesRestrain       # Grab -> Grab -> Disarm
-  - CombativesPummel         # Disarm -> Disarm -> Harm
-  - CombativesKnockdown      # Harm -> Harm -> Disarm
-  - CombativesThrow          # Grab -> Disarm
-  - CombativesSlitThroat     # Grab -> Harm
-  - CombativesWeakening      # Disarm -> Disarm
-  - CombativesDisarm         # Harm -> Disarm
+  - CombativesChoke           # Grab -> Grab -> Grab -> Grab
+  - CombativesRestrain        # Grab -> Grab -> Disarm
+  - CombativesRestrainWithGun # Grab -> Grab -> HarmLight
+  - CombativesPummel          # Disarm -> Disarm -> Harm
+  - CombativesKnockdown       # Harm -> Harm -> Disarm
+  - CombativesThrow           # Grab -> Disarm
+  - CombativesThrowWithGun    # Grab -> HarmLight
+  - CombativesSlitThroat      # Grab -> HarmLight
+  - CombativesWeakening       # Disarm -> Disarm
+  - CombativesDisarm          # Harm -> Disarm
 
 - type: combo
   id: CombativesRestrain
@@ -27,12 +29,34 @@
   event: !type:CombativesRestrainPerformedEvent
 
 - type: combo
+  id: CombativesRestrainWithGun
+  name: Armed Restrain
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - Grab
+  - HarmLight
+  event: !type:CombativesRestrainPerformedEvent
+
+- type: combo
   id: CombativesThrow
   name: Throw
   martialArtsForm: Combatives
   attacks:
   - Grab
   - Disarm
+  event: !type:CombativesThrowPerformedEvent
+  canDoWhileProne: false
+  staminaDamage: 25
+  paralyzeTime: 7
+
+- type: combo
+  id: CombativesThrowWithGun
+  name: Armed Throw
+  martialArtsForm: Combatives
+  attacks:
+  - Grab
+  - HarmLight
   event: !type:CombativesThrowPerformedEvent
   canDoWhileProne: false
   staminaDamage: 25
@@ -58,6 +82,7 @@
   - Grab
   - Harm
   event: !type:CombativesSlitThroatPerformedEvent
+  extraDamage: 150
 
 - type: combo
   id: CombativesKnockdown
