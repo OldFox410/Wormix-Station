@@ -1,6 +1,22 @@
 <Document>
 
-    ### Удушение (Choke)
+  # Комбативс
+
+  Искусство ближнего боя, разработанное для боевых спецподразделений. Крайне эффективен на ближних дистанциях, предоставляя тактическое преимущество против нескольких вооружённых противников при достаточной ловкости.
+  Скорость атак, захватов и толчков без оружия увеличена втрое.
+
+
+  ### Захват и удержание
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+  </Box>
+
+  Позволяет исполнить особый захват, принудительно удерживающий цель в захвате и блокируя любые её действия.
+
+  ### Удушение
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
@@ -9,29 +25,9 @@
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
   </Box>
 
-  Наносит урон по выносливости. При критическом истощении выносливости погружает цель в глубокий сон.
+  Выполняется из удержания. Оглушает противника, либо усыпляет, если он уже был оглушён.
 
-  ### Захват и удержание (Restrain)
-
-  <Box>
-    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-  </Box>
-
-  Переводит захват в жесткую фазу, принудительно удерживая цель на ногах и блокируя ей возможность вести огонь и падать на пол.
-
-  ### Избиение (Pummel)
-
-  <Box>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
-    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
-  </Box>
-
-  Серия быстрых ударов, наносящая урон ушибами и оглушающая противника.
-
-  ### Нокдаун (Knockdown)
+  ### Контратака
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
@@ -39,42 +35,52 @@
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Сбивает противника с ног, нанося урон выносливости и заставляя выронить предметы из рук.
+  Приём с высокой эффективностью, в случае, если вас взяли в особые захваты этого и других искусств ближнего боя, а также если вы лежите на полу.
 
-  ### Бросок CQC (Throw)
+  ### Бросок
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Мощный бросок через себя, швыряющий тушку в направлении взгляда и наносящий урон от падения.
+  Мощный бросок вперёд, швыряющий противника в направлении от вас и сбивающий с ног противников по пути.
 
-  ### Перерезание горла (Slit Throat)
+  ### Перерезание горла
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookGrab" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
   </Box>
 
-  Выполняется с ножом при прицеле в голову из захвата. Наносит точечный колотый урон (Piercing) и вызывает тяжелое артериальное кровотечение.
+  Выполняется с ножом из захвата, должен быть нацелев в голову. Наносит огромный колотый урон, вводя противника в критическое состояние и ломает шею.
 
-  ### Ослабление (Weakening)
+  ### Ослабление
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Быстрый сбивающий удар, временно снижающий выносливость и замедляющий атаки противника.
+  Серия ударов, снижающая скорость передвижения противника и наносящая серьёзный урон выносливости. При атаке на противника с оружием, имеющим затвор, открывает его, мешая ведению огня. Не сбрасывает счётчик комбо.
 
-  ### Обезоруживание (Disarm)
+  ### Избиение
+
+  <Box>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
+    <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
+  </Box>
+
+  Серия быстрых ударов, наносящая урон ушибами и оглушающая противника. Завершает серию ослаблений.
+
+  ### Обезоруживание
 
   <Box>
     <GuideEntityEmbed Entity="GuidebookHarm" Caption=""/>
     <GuideEntityEmbed Entity="GuidebookDisarm" Caption=""/>
   </Box>
 
-  Выбивает активное оружие из рук противника и блокирует возможность атаковать на несколько секунд.
+  Выбивает оружие из активной руки.
 
 </Document>

@@ -73,6 +73,7 @@
   - Grab
   event: !type:CombativesChokePerformedEvent
   staminaDamage: 200
+  canDoWhileProne: false
 
 - type: combo
   id: CombativesSlitThroat
@@ -83,6 +84,7 @@
   - Harm
   event: !type:CombativesSlitThroatPerformedEvent
   extraDamage: 150
+  canDoWhileProne: false
 
 - type: combo
   id: CombativesKnockdown

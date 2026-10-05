@@ -1,7 +1,7 @@
 - type: entity
   parent: [BaseItem, BaseSyndicateContraband]
   id: CombativesManual
-  name: tactical manual
+  name: Combatives Manual
   description: A worn, unmarked black manual containing diagrams and principles of close-quarters combatives.
   components:
   - type: Sprite

@@ -13,6 +13,7 @@ using Content.Shared.Damage.Events;
 using Content.Shared.Execution;
 using Content.Shared.Hands.Components;
 using Content.Shared.Interaction.Events;
+using Content.Shared.Inventory.VirtualItem;
 using Content.Shared.Item;
 using Content.Shared.Mobs.Components;
 using Content.Shared.Movement.Pulling.Components;
@@ -58,6 +59,7 @@ public partial class SharedMartialArtsSystem
         SubscribeLocalEvent<CombativesRestrainComponent, SpeakAttemptEvent>(OnRestrainSpeakAttempt);
         SubscribeLocalEvent<CombativesRestrainComponent, PreventCollideEvent>(OnRestrainPreventCollide);
         SubscribeLocalEvent<CombativesRestrainComponent, KnockDownAttemptEvent>(OnKnockDownAttempt);
+        SubscribeLocalEvent<CombativesRestrainComponent, KnockedDownEvent>(OnKnockedDown);
 
         SubscribeLocalEvent<CombativesRestrainComponent, StoodEvent>(OnRestrainStood);
         SubscribeLocalEvent<CombativesRestrainComponent, PullStoppedMessage>(OnRestrainStopped);
@@ -217,9 +219,11 @@ public partial class SharedMartialArtsSystem
             Unrestrain((target, restrain));
         }
 
-        _stun.TryKnockdown(target, knockdownTime, true, false, restrain != null);
+        bool isRestrained = restrain != null;
 
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (isRestrained ? 3 : 1), applyResistances: true);
+        _stun.TryKnockdown(target, knockdownTime, true, false, isRestrained);
+
 
         _pulling.TryStopPull(target, pullable, ent, true);
 
@@ -275,7 +279,6 @@ public partial class SharedMartialArtsSystem
             || !_tag.HasTag(_hands.GetActiveItem((ent, hands)).GetValueOrDefault(), _combatKnife))
             return;
 
-        // Находим сущность части тела (Голова)
         var (partType, symmetry) = _body.ConvertTargetBodyPart(targeting.Target);
         var targetLimb = _body.GetBodyChildrenOfType(target, partType, symmetry: symmetry).FirstOrDefault();
 
@@ -285,15 +288,12 @@ public partial class SharedMartialArtsSystem
             || woundable.WoundableIntegrity <= 0)
             return;
 
-        // Режущий урон для перерезания горла
         var damage = new DamageSpecifier();
         damage.DamageDict.Add("Piercing", proto.ExtraDamage);
         _damageable.TryChangeDamage(targetEntity, damage, ignoreResistances: false, origin: ent, canMiss: false);
 
-        // Вызываем ранение "Slash" (глубокий порез / кровотечение)
         if (_wound.TryInduceWound(targetLimb.Id, "Piercing", proto.ExtraDamage, out var woundInduced))
         {
-            // Если у ранения есть своя логика костей/хрящей (например, гортань/трахея), применяем травму
             var bone = woundable.Bone.ContainedEntities.FirstOrDefault();
             if (bone != default)
             {
@@ -321,14 +321,32 @@ public partial class SharedMartialArtsSystem
             || !TryUseMartialArt(ent, proto, out var target, out _))
             return;
 
-        var restrained = HasComp<ArmbarredComponent>(ent);
+        var restrained =
+               HasComp<ArmbarredComponent>(ent)
+            || HasComp<CombativesRestrainComponent>(ent);
 
+        bool standing = true;
+        if (TryComp<StandingStateComponent>(ent, out var standingState))
+        {
+            standing = standingState.Standing;
+        }
+
+        float mult = 1 *
+            Math.Max((restrained ? 4 : 1),
+            (!standing ? 2 : 1));
 
         if (TryComp<PullableComponent>(ent, out var pullable))
             _pulling.TryStopPull(ent, pullable, target, true);
 
-        DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * (restrained ? 4 : 1), out _);
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (restrained ? 8 : 1), applyResistances: true);
+        DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * mult, out _);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * mult * 2, applyResistances: true);
+
+        if (!standing)
+        {
+            if (HasComp<KnockedDownComponent>(ent.Owner))
+                RemComp<KnockedDownComponent>(ent.Owner);
+            _standingState.Stand(ent.Owner, standingState);
+        }
 
         if (restrained)
         {
@@ -337,13 +355,6 @@ public partial class SharedMartialArtsSystem
                 _transform.GetMapCoordinates(ent).Position - _transform.GetMapCoordinates(target).Position,
                 5,
                 behavior: proto.DropItems);
-
-            if (TryComp<StandingStateComponent>(ent.Owner, out var standing) && !standing.Standing)
-            {
-                if (HasComp<KnockedDownComponent>(ent.Owner))
-                    RemComp<KnockedDownComponent>(ent.Owner);
-                _standingState.Stand(ent.Owner, standing);
-            }
         }
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
@@ -356,7 +367,8 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out _)
             || !TryComp<StandingStateComponent>(target, out var standingState)
-            || !standingState.Standing)
+            || !standingState.Standing
+            || HasComp<CombativesRestrainComponent>(ent))
             return;
 
         _movementMod.TryUpdateMovementSpeedModDuration(target, MartsGenericSlow, TimeSpan.FromSeconds(5), 0.5f, 0.5f);
@@ -381,7 +393,8 @@ public partial class SharedMartialArtsSystem
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
             || !TryUseMartialArt(ent, proto, out var target, out _)
             || !TryComp<StandingStateComponent>(target, out var standingState)
-            || !standingState.Standing)
+            || !standingState.Standing
+            || HasComp<CombativesRestrainComponent>(ent))
             return;
 
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
@@ -394,10 +407,13 @@ public partial class SharedMartialArtsSystem
     private void OnCombativesDisarm(Entity<CanPerformComboComponent> ent, ref CombativesDisarmPerformedEvent args)
     {
         if (!_proto.TryIndex(ent.Comp.BeingPerformed, out var proto)
-            || !TryUseMartialArt(ent, proto, out var target, out _))
+            || !TryUseMartialArt(ent, proto, out var target, out _)
+            || HasComp<CombativesRestrainComponent>(ent))
             return;
 
         if (!_hands.TryGetActiveItem(target, out var activeItem))
+            return;
+        if (HasComp<VirtualItemComponent>(activeItem))
             return;
         if (!_hands.TryDrop(target, activeItem.Value))
             return;
@@ -439,7 +455,9 @@ public partial class SharedMartialArtsSystem
 
     private void OnRestrainAttackAttempt(Entity<CombativesRestrainComponent> ent, ref AttackAttemptEvent args)
     {
-        args.Cancel();
+        if (!TryComp<CanPerformComboComponent>(ent, out var performer)
+            || !performer.ArtsForms.Contains(MartialArtsForms.Combatives))
+            args.Cancel();
     }
 
     private void OnRestrainSpeakAttempt(Entity<CombativesRestrainComponent> ent, ref SpeakAttemptEvent args)
@@ -450,6 +468,15 @@ public partial class SharedMartialArtsSystem
     private void OnKnockDownAttempt(Entity<CombativesRestrainComponent> ent, ref KnockDownAttemptEvent args)
     {
         args.Cancelled = true;
+    }
+
+    private void OnKnockedDown(Entity<CombativesRestrainComponent> ent, ref KnockedDownEvent args)
+    {
+        if (!TryComp<PullableComponent>(ent, out var pullable))
+            return;
+
+        _pulling.TryStopPull(ent, pullable, ent, true);
+        Unrestrain(ent);
     }
 
     private void OnRestrainPreventCollide(Entity<CombativesRestrainComponent> ent, ref PreventCollideEvent args)
