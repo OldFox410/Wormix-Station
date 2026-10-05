@@ -325,15 +325,16 @@ public partial class SharedMartialArtsSystem
                HasComp<ArmbarredComponent>(ent)
             || HasComp<CombativesRestrainComponent>(ent);
 
-        bool standing = true;
+        bool performerStanding = true;
+        bool targetStanding = HasComp<StandingStateComponent>(target);
         if (TryComp<StandingStateComponent>(ent, out var standingState))
         {
-            standing = standingState.Standing;
+            performerStanding = standingState.Standing;
         }
 
         float mult = 1 *
             Math.Max((restrained ? 4 : 1),
-            (!standing ? 2 : 1));
+            (!targetStanding ? 2 : 1));
 
         if (TryComp<PullableComponent>(ent, out var pullable))
             _pulling.TryStopPull(ent, pullable, target, true);
@@ -341,7 +342,7 @@ public partial class SharedMartialArtsSystem
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * mult, out _);
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage * mult * 2, applyResistances: true);
 
-        if (!standing)
+        if (!performerStanding)
         {
             if (HasComp<KnockedDownComponent>(ent.Owner))
                 RemComp<KnockedDownComponent>(ent.Owner);
