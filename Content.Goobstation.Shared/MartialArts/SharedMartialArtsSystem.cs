@@ -126,7 +126,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         InitializeKravMaga();
         InitializeSleepingCarp();
         InitializeCqc();
-        InitializeCombatives();
+        InitializeCombatives(); // EDIT Wormix
         InitializeCorporateJudo();
         InitializeCapoeira();
         InitializeDragon();
@@ -138,7 +138,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, CheckGrabOverridesEvent>(CheckGrabStageOverride);
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ShotAttemptedEvent>(OnShotAttempt);
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ComboAttackPerformedEvent>(OnComboAttackPerformed);
-        SubscribeLocalEvent<MartialArtsKnowledgeComponent, GetMeleeAttackRateEvent>(OnArtGetMeleeAttackRate);
+        SubscribeLocalEvent<MartialArtsKnowledgeComponent, GetMeleeAttackRateEvent>(OnArtGetMeleeAttackRate); // EDIT Wormix
 
         SubscribeLocalEvent<KravMagaSilencedComponent, SpeakAttemptEvent>(OnSilencedSpeakAttempt);
 
@@ -323,12 +323,13 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             case MartialArtsForms.Capoeira:
                 OnCapoeiraAttackPerformed(ent, ref args);
                 break;
-            case MartialArtsForms.Combatives:
+            case MartialArtsForms.Combatives: // EDIT Wormix
                 OnCombativesAttackPerformed(ent, ref args);
                 break;
         }
     }
 
+    // EDIT Wormix Start
     private void OnArtGetMeleeAttackRate(Entity<MartialArtsKnowledgeComponent> ent, ref GetMeleeAttackRateEvent args)
     {
         switch (ent.Comp.MartialArtsForm)
@@ -338,6 +339,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
                 break;
         }
     }
+    // EDIT Wormix End
 
     private void OnGetMovespeed(Entity<MartialArtModifiersComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
@@ -447,12 +449,13 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         if (TryComp<CanPerformComboComponent>(ent, out var comboComponent))
         {
             comboComponent.AllowedCombos.Clear();
-            comboComponent.ArtsForms.Clear();
+            comboComponent.ArtsForms.Clear(); // EDIT Wormix
         }
 
         RemCompDeferred<DragonKungFuTimerComponent>(ent);
     }
 
+    // EDIT Wormix Start
     private void CheckGrabStageOverride<T>(EntityUid uid, T component, CheckGrabOverridesEvent args)
         where T : GrabStagesOverrideComponent
     {
@@ -472,6 +475,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             }
         }
     }
+    // EDIT Wormix End
 
     private void OnSilencedSpeakAttempt(Entity<KravMagaSilencedComponent> ent, ref SpeakAttemptEvent args)
     {
@@ -639,9 +643,11 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             return;
         foreach (var item in comboListPrototype.Combos)
         {
+            // EDIT Wormix Start
             var proto = _proto.Index(item);
             combo.AllowedCombos.Add(proto);
             combo.ArtsForms.Add(proto.MartialArtsForm);
+            // EDIT Wormix End
         }
     }
 

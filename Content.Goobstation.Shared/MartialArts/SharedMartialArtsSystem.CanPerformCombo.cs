@@ -62,9 +62,11 @@ public partial class SharedMartialArtsSystem
     {
         foreach (var item in component.RoundstartCombos)
         {
+            // EDIT Wormix Start
             var proto = _proto.Index(item);
             component.AllowedCombos.Add(proto);
             component.ArtsForms.Add(proto.MartialArtsForm);
+            // EDIT Wormix End
         }
     }
 
@@ -78,7 +80,7 @@ public partial class SharedMartialArtsSystem
 
         var afterEv = new AfterComboCheckEvent(uid, args.Target, args.Weapon, args.Type);
 
-        if (!IsWeaponAllowed(uid, args.Weapon, component))
+        if (!IsWeaponAllowed(uid, args.Weapon, component)) // EDIT Wormix
         {
             component.LastAttacks.Clear();
             RaiseLocalEvent(uid, ref afterEv);

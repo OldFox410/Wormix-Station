@@ -126,7 +126,7 @@ public sealed partial class GrantHellRipComponent : GrantMartialArtKnowledgeComp
     public override LocId? LearnMessage { get; set; } = "hellrip-success-learned";
 }
 
-
+// EDIT Wormix Start
 [RegisterComponent]
 public sealed partial class GrantCombativesComponent : GrantMartialArtKnowledgeComponent
 {
@@ -135,3 +135,4 @@ public sealed partial class GrantCombativesComponent : GrantMartialArtKnowledgeC
 
     public override LocId? LearnMessage { get; set; } = "combatives-success-learned";
 }
+// EDIT Wormix End
