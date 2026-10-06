@@ -332,7 +332,7 @@ public partial class SharedMartialArtsSystem
             performerStanding = standingState.Standing;
         }
 
-        float mult = 1 *
+        float mult =
             Math.Max((restrained ? 4 : 1),
             (!targetStanding ? 2 : 1));
 
