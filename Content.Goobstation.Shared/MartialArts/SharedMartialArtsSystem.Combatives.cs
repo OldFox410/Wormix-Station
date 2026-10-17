@@ -223,6 +223,7 @@ public partial class SharedMartialArtsSystem
 
         _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (isRestrained ? 3 : 1), applyResistances: true);
         _stun.TryKnockdown(target, knockdownTime, true, false, isRestrained);
+        _newStatus.TryUpdateStatusEffectDuration(target, SharedStunSystem.StunId, knockdownTime / 4);
 
 
         _pulling.TryStopPull(target, pullable, ent, true);
@@ -326,7 +327,13 @@ public partial class SharedMartialArtsSystem
             || HasComp<CombativesRestrainComponent>(ent);
 
         bool performerStanding = true;
-        bool targetStanding = HasComp<StandingStateComponent>(target);
+        bool targetStanding = true;
+
+        if (TryComp<StandingStateComponent>(target, out var targetStandingState))
+        {
+            targetStanding = targetStandingState.Standing;
+        }
+
         if (TryComp<StandingStateComponent>(ent, out var standingState))
         {
             performerStanding = standingState.Standing;
@@ -473,11 +480,8 @@ public partial class SharedMartialArtsSystem
 
     private void OnKnockedDown(Entity<CombativesRestrainComponent> ent, ref KnockedDownEvent args)
     {
-        if (!TryComp<PullableComponent>(ent, out var pullable))
-            return;
-
-        _pulling.TryStopPull(ent, pullable, ent, true);
-        Unrestrain(ent);
+        ent.Comp.HandledForcedStand = true;
+        _standingState.Stand(ent, force: true);
     }
 
     private void OnRestrainPreventCollide(Entity<CombativesRestrainComponent> ent, ref PreventCollideEvent args)
