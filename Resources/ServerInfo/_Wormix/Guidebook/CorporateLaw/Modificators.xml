@@ -1,0 +1,145 @@
+<Document>
+
+# Модификаторы сроков приговоров
+
+Возможно применять только одно послабление и одно ухудшение приговора. Они накладываются на итоговый срок и могут увеличить наказание, даже если время заключения уже достигло максимального срока по самой тяжкой статье. Либо уменьшить, а иногда и отменить заключение, например при проникновении на территорию для спасения от угрозы во время чрезвычайной ситуации или при самообороне.
+
+<Table Columns="3">
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Модификатор[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Описание[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Влияние на наказание[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Крайняя необходимость[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Вынужденные действия в целях самозащиты, защиты здоровья и жизни своих коллег, а также сохранности своего рабочего места и станции в целом.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Снятие обвинений.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Явка с повинной[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Сознательная сдача сотрудникам службы безопасности после совершения преступления.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Сокращение наказания на 50%.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Сделка со следствием[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Раскрытие полных подробностей совершённого преступления, сдача своих подельников и помощь в розыске похищенного имущества. Для применения этого модификатора информация должна быть истинной.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Сокращение наказания на 50%.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Пособничество[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Помощь в совершении преступления или склонение к нему. Член экипажа, оказывающий помощь в совершении преступления либо склонивший к нему, рассматривается как пособник и подлежит наказанию в соответствии со статьями, в нарушении которых оказывалась помощь.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Наказание в соответствии со статьями, в нарушении которых оказывалась помощь.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Отсутствие умысла[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Установленное в ходе разбирательства отсутствие намерения совершить инкриминируемое преступление, то есть неумышленное преступление.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Наказание предыдущей степени тяжести по статье, в нарушении которой было установлено отсутствие умысла.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Помеха следствию[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Неисполнение правомерных приказов сотрудников СБ во время следствия или заключения.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Увеличение наказания на 50%.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Рецидив[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Повторное совершение преступления из одной и той же категории после отбытия наказания за предыдущее. Правонарушения не должны совершаться в рамках одного преступного загула, а должны быть отдельными повторными правонарушениями. При нарушении условий УДО путём совершения преступления из категории, по которой УДО было выдано, данный модификатор также применяется.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Увеличение наказания на 5 минут за каждый случай рецидива.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]Должностное преступление[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Нарушение Космического закона должностным лицом. Должностные лица призваны не только обеспечивать порядок и соблюдение Космического закона на объектах NanoTrasen, но и быть образцом и примером для подражания, на который будут ориентироваться прочие члены экипажа.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            Увеличение наказания на 50%.
+        </Box>
+    </ColorBox>
+</Table>
+
+</Document>

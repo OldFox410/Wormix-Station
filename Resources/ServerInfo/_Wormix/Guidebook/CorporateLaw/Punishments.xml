@@ -1,0 +1,107 @@
+
+<Document>
+
+# Правила сложения статей
+
+Преступники могут совершать серьёзные преступления, которые могут содержать несколько статей **разных категорий**. В этом случае срок заключения рассчитывается по самой тяжкой (4XX, 5XX и т. д.) нарушенной статье, а все остальные нарушения прибавляются к общей сумме в размере не более 50% от её максимального срока.
+
+- Преступления одной категории (XХ) не могут быть сложены вместе — выбирается только самая тяжкая статья.
+- Преступления с примечаниями, указывающими, что они не складываются с другим преступлением, не могут быть сложены с этим преступлением.
+- Модификаторы учитываются отдельно и накладываются на итоговое время. Допускается не более одного положительного и одного отрицательного модификатора.
+
+# Степени тяжести нарушения и соответствующие наказания
+
+<Table Columns="3">
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Степень тяжести нарушения[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Правовое наказание[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [color=#FFFFFF][bold]Административное наказание[/bold][/color]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]I (лёгкое)[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Заключение до [bold]10 минут[/bold] или предупреждение.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Понижение в должности.[/bold] На усмотрение главы отдела, к которому относится преступник.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]II (среднее)[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Заключение на [bold]15 минут[/bold].
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Понижение в должности.[/bold] На усмотрение главы отдела, к которому относится преступник.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]III (тяжкое)[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Заключение на [bold]25 минут[/bold].
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Понижение в должности или увольнение.[/bold] На усмотрение главы отдела, к которому относится преступник.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]IV (сверхтяжкое)[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            Заключение на [bold]40 минут[/bold].
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Понижение в должности или увольнение.[/bold] На усмотрение главы отдела, к которому относится преступник.
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+        <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+            [bold]V (критическое)[/bold]
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Пожизненное заключение[/bold] или [bold]высшая мера наказания[/bold].
+        </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+        <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+            [bold]Увольнение с должности, всегда.[/bold]
+        </Box>
+    </ColorBox>
+</Table>
+
+</Document>

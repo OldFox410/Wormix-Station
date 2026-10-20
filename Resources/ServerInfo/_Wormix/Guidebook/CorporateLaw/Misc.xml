@@ -1,0 +1,272 @@
+
+<Document>
+# Справочник статей
+Коды и названия правонарушений по категориям тяжести.
+
+<Table Columns="6">
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]Код[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]1XX — Легкие нарушения[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]2XX — Средние нарушения[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]3XX — Тяжелые нарушения[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]4XX — Особо тяжкие нарушения[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]5XX — Критические нарушения[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X00[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Оскорбление должностного лица" link="CLChapter0"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Сопротивление органам власти" link="CLChapter0"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Нападение на должностное лицо" link="CLChapter0"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Мятеж" link="CLChapter0"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Убийство должностного лица" link="CLChapter0"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X01[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Харассмент" link="CLChapter1"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Нападение" link="CLChapter1"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Нанесение увечий" link="CLChapter1"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Убийство" link="CLChapter1"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Уничтожение тела" link="CLChapter1"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X02[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Оборот наркотиков" link="CLChapter2"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Оборот контрабанды" link="CLChapter2"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Эксплуатация опасных веществ" link="CLChapter2"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Владение вражеским снаряжением" link="CLChapter2"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X03[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Злоупотребление экипировкой" link="CLChapter3"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Владение боевым приспособлением" link="CLChapter3"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Владение боевым оружием" link="CLChapter3"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Распространение оружия" link="CLChapter3"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X04[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Хулиганство" link="CLChapter4"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Порча имущества" link="CLChapter4"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Мошенничество" link="CLChapter4"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Теракт" link="CLChapter4"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X05[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Мелкая кража" link="CLChapter5"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Грабеж" link="CLChapter5"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Кража" link="CLChapter5"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Разбой" link="CLChapter5"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Особо крупное хищение" link="CLChapter5"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X06[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Проникновение" link="CLChapter6"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Проникновение в стратегическую точку" link="CLChapter6"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Проникновение в защищённую стратегическую точку" link="CLChapter6"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#1A1B1E">
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="2">
+        [color=#FFFFFF][bold]X07[/bold][/color]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#0F4F27">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#414700">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Халатность" link="CLChapter7"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#611300">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Саботаж" link="CLChapter7"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#56000C">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Грубая халатность" link="CLChapter7"]
+      </Box>
+    </ColorBox>
+    <ColorBox Color="#121212">
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        [textlink="Особо крупный саботаж" link="CLChapter7"]
+      </Box>
+    </ColorBox>
+</Table>
+</Document>

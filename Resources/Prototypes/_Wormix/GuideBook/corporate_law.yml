@@ -1,0 +1,88 @@
+- type: guideEntry
+  id: CorporateLaw
+  name: guide-entry-corporate-law
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/CorporateLaw.xml"
+  children:
+  - CLOPRS
+  - CLMisc
+  - CLCrimeList
+  - CLPunishments
+  - CLModificators
+
+- type: guideEntry
+  id: CLOPRS
+  name: guide-entry-cl-oprs
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/OPRS.xml"
+
+- type: guideEntry
+  id: CLPunishments
+  name: guide-entry-cl-punishments
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Punishments.xml"
+
+- type: guideEntry
+  id: CLMisc
+  name: "Дополнительно"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Misc.xml"
+
+- type: guideEntry
+  id: CLModificators
+  name: guide-entry-cl-modificators
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Modificators.xml"
+
+- type: guideEntry
+  id: CLCrimeList
+  name: guide-entry-cl-crime-list
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/CrimeList.xml"
+  children:
+  - CLChapter0
+  - CLChapter1
+  - CLChapter2
+  - CLChapter3
+  - CLChapter4
+  - CLChapter5
+  - CLChapter6
+  - CLChapter7
+
+
+# Список глав со списками статьей
+- type: guideEntry
+  id: CLChapter0
+  name: "Преступления против власти"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter0.xml"
+
+- type: guideEntry
+  id: CLChapter1
+  name: "Преступления против личности"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter1.xml"
+
+- type: guideEntry
+  id: CLChapter2
+  name: "Нарушение ограничений оборота опасных предметов"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter2.xml"
+
+- type: guideEntry
+  id: CLChapter3
+  name: "Незаконная экипировка"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter3.xml"
+
+- type: guideEntry
+  id: CLChapter4
+  name: "Нарушение общественного порядка"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter4.xml"
+
+- type: guideEntry
+  id: CLChapter5
+  name: "Экономические преступления"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter5.xml"
+
+- type: guideEntry
+  id: CLChapter6
+  name: "Нарушение уровней допуска"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter6.xml"
+
+- type: guideEntry
+  id: CLChapter7
+  name: "Преступления против трудового порядка"
+  text: "/ServerInfo/_Wormix/Guidebook/CorporateLaw/Chapter7.xml"
+
+

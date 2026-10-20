@@ -1,0 +1,85 @@
+<Document>
+  # Основные Права Разумных Существ (ОПРС)
+
+  Всеобщая Декларация Прав Разумных Существ, устанавливающая базовые нормы для локальных законодательных актов и ратифицированная большинством государств и корпораций. Ни один государственный, корпоративный или иной закон не может нарушать положения ОПРС.
+
+  ## Признание разумных существ
+
+  1. Данная декларация защищает права всех разумных существ. Признание при рождении получают следующие расы: люди, родентии, арахниды, фелениды, тенекины, дворфы, таяраны, вульпканины, унатхи, нианы, хитиниды, резоми, они, КПБ, ферокси, дионы, слаймолюды, гарпии.
+  2. Любое другое разумное существо не защищено ОПРС и является объектом исследований и имуществом научного отдела.
+
+  ## Основные права
+
+  <Table Columns="2">
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        Право
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        Положение декларации
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        1. Право на жизнь
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Никто не имеет право отнять жизнь без решения суда. Казнь - крайняя мера, она может применяться лишь в исключительных случаях. Каждый имеет право на клонирование, никто не может быть лишен этого права. Отказ клонировать - равнозначен убийству.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        2. Право на достоинство
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Никто не может и не имеет право принудить разумное существо к унижающим его достоинство действиям. Никто не может быть без добровольного согласия подвергнут медицинским, научным или иным опытам, если иное не предписано законом.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        3. Право на свободу и личную неприкосновенность
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Никто не может быть лишен свободы, кроме как для исполнения законно назначенного наказания или ожидания его назначения.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        4. Право на неприкосновенность частной жизни
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Никто не может принудить к передачи личной информации. Никто не имеет права вмешиваться в частную жизнь, кроме как для исполнения законно назначенного наказания и/или при применении законных процедур.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        5. Право на охрану здоровья и медицинскую помощь
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Каждый имеет право в оказании бесплатной и своевременной медицинской помощи.
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Center" VerticalAlignment="Center" Margin="2">
+        6. Право на владение имуществом
+      </Box>
+    </ColorBox>
+    <ColorBox>
+      <Box HorizontalAlignment="Left" VerticalAlignment="Center" Margin="4">
+        Каждый имеет право на владение личным имуществом, но может быть лишен его при применении законных процедур.
+      </Box>
+    </ColorBox>
+  </Table>
+</Document>
