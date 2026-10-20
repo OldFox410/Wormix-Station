@@ -12,6 +12,7 @@
   - DragonKungFu
   - HellRip
   - Combatives
+  - Mimejutsu #CorvaxGoob
 
 - type: guideEntry
   id: CQC
@@ -57,3 +58,8 @@
   id: Combatives
   name: guide-entry-combatives
   text: "/ServerInfo/_Goobstation/Guidebook/MartialArts/Combatives.xml"
+
+- type: guideEntry #CorvaxGoob
+  id: Mimejutsu
+  name: guide-entry-mimejutsu
+  text: "/ServerInfo/_CorvaxGoob/Guidebook/MartialArts/Mimejutsu.xml"

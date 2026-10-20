@@ -1,27 +1,3 @@
-// SPDX-FileCopyrightText: 2025 Aiden <28298836+Aidenkrz@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aidenkrz <aiden@djkraz.com>
-// SPDX-FileCopyrightText: 2025 August Eymann <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <93730715+Aviu00@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Aviu00 <aviu00@protonmail.com>
-// SPDX-FileCopyrightText: 2025 Baptr0b0t <152836416+Baptr0b0t@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Baptr0b0t <152836416+baptr0b0t@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Bokser815 <70928915+Bokser815@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 GoobBot <uristmchands@proton.me>
-// SPDX-FileCopyrightText: 2025 Lincoln McQueen <lincoln.mcqueen@gmail.com>
-// SPDX-FileCopyrightText: 2025 Lumminal <81829924+Lumminal@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 Marcus F <marcus2008stoke@gmail.com>
-// SPDX-FileCopyrightText: 2025 Misandry <mary@thughunt.ing>
-// SPDX-FileCopyrightText: 2025 SX-7 <sn1.test.preria.2002@gmail.com>
-// SPDX-FileCopyrightText: 2025 Solstice <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 SolsticeOfTheWinter <solsticeofthewinter@gmail.com>
-// SPDX-FileCopyrightText: 2025 Ted Lukin <66275205+pheenty@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <159397573+gluesniffler@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 gluesniffler <linebarrelerenthusiast@gmail.com>
-// SPDX-FileCopyrightText: 2025 gus <august.eymann@gmail.com>
-// SPDX-FileCopyrightText: 2025 pheenty <fedorlukin2006@gmail.com>
-// SPDX-FileCopyrightText: 2025 thebiggestbruh <199992874+thebiggestbruh@users.noreply.github.com>
-// SPDX-FileCopyrightText: 2025 thebiggestbruh <marcus2008stoke@gmail.com>
-//
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
 using Content.Goobstation.Common.Grab;
@@ -132,6 +108,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         InitializeDragon();
         InitializeNinjutsu();
         InitializeHellRip();
+        InitializeMimejutsu(); // CorvaxGoob
         InitializeCanPerformCombo();
 
         SubscribeLocalEvent<MartialArtsKnowledgeComponent, ComponentShutdown>(OnShutdown);
@@ -261,7 +238,7 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     }
 
     // Wormix EDIT Start
-    // Если ты действительно захотел применять комбы из разных искусств в одном, прости. Мои искренние соболезнования, мне не хотелось учитывать этот кейс из-за структуры компонентов.
+    // ���� �� ������������� ������� ��������� ����� �� ������ �������� � �����, ������. ��� ��������� ��������������, ��� �� �������� ��������� ���� ���� ��-�� ��������� �����������.
     public bool IsWeaponAllowed(EntityUid user, EntityUid weapon, CanPerformComboComponent comp)
     {
         return comp.ArtsForms
@@ -326,20 +303,11 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             case MartialArtsForms.Combatives: // EDIT Wormix
                 OnCombativesAttackPerformed(ent, ref args);
                 break;
-        }
-    }
-
-    // EDIT Wormix Start
-    private void OnArtGetMeleeAttackRate(Entity<MartialArtsKnowledgeComponent> ent, ref GetMeleeAttackRateEvent args)
-    {
-        switch (ent.Comp.MartialArtsForm)
-        {
-            case MartialArtsForms.Combatives:
-                OnCombativesMeleeAttackRate(ent, ref args);
+            case MartialArtsForms.Mimejutsu: // CorvaxGoob
+                OnMimejutsuAttackPerformed(ent, ref args);
                 break;
         }
     }
-    // EDIT Wormix End
 
     private void OnGetMovespeed(Entity<MartialArtModifiersComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
