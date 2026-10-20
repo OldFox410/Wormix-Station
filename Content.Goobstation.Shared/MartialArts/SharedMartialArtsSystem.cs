@@ -309,6 +309,17 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         }
     }
 
+    // EDIT Wormix Start
+    private void OnArtGetMeleeAttackRate(Entity<MartialArtsKnowledgeComponent> ent, ref GetMeleeAttackRateEvent args)
+    {
+        switch (ent.Comp.MartialArtsForm)
+        {
+            case MartialArtsForms.Combatives:
+                OnCombativesMeleeAttackRate(ent, ref args);
+                break;
+        }
+    }
+
     private void OnGetMovespeed(Entity<MartialArtModifiersComponent> ent, ref RefreshMovementSpeedModifiersEvent args)
     {
         var (mult, _) = GetMultiplierModifier(ent, MartialArtModifierType.MoveSpeed, null);

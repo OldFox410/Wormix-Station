@@ -74,7 +74,7 @@ public partial class SharedMartialArtsSystem
 
         if (!TryComp<MeleeWeaponComponent>(args.Wearer, out var meleeWeaponComponent))
             return;
-
+            
         var originalDamage = new DamageSpecifier();
         originalDamage.DamageDict[martialArtsKnowledge.OriginalFistDamageType]
             = FixedPoint2.New(martialArtsKnowledge.OriginalFistDamage);

@@ -207,7 +207,7 @@ public partial class SharedMartialArtsSystem
             || !TryComp<GrabIntentComponent>(ent, out var grabIntent))
             return;
 
-        var knockdownTime = TimeSpan.FromSeconds(proto.ParalyzeTime);
+        var knockdownTime = proto.ParalyzeTime;
 
         var ev = new BeforeStaminaDamageEvent(1f);
         RaiseLocalEvent(target, ref ev);
@@ -221,7 +221,7 @@ public partial class SharedMartialArtsSystem
 
         bool isRestrained = restrain != null;
 
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (isRestrained ? 3 : 1), applyResistances: true);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * (isRestrained ? 3 : 1), ignoreResist: false);
         _stun.TryKnockdown(target, knockdownTime, true, false, isRestrained);
         _newStatus.TryUpdateStatusEffectDuration(target, SharedStunSystem.StunId, knockdownTime / 4);
 
@@ -256,7 +256,7 @@ public partial class SharedMartialArtsSystem
         }
         else
         {
-            _stamina.TakeStaminaDamage(target, proto.StaminaDamage, source: ent, applyResistances: false);
+            _stamina.TakeStaminaDamage(target, proto.StaminaDamage, source: ent, ignoreResist: true);
         }
 
         restrain.HandledForcedStand = true;
@@ -347,7 +347,7 @@ public partial class SharedMartialArtsSystem
             _pulling.TryStopPull(ent, pullable, target, true);
 
         DoDamage(ent, target, proto.DamageType, proto.ExtraDamage * mult, out _);
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * mult * 2, applyResistances: true);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage * mult * 2, ignoreResist: false);
 
         if (!performerStanding)
         {
@@ -381,7 +381,7 @@ public partial class SharedMartialArtsSystem
 
         _movementMod.TryUpdateMovementSpeedModDuration(target, MartsGenericSlow, TimeSpan.FromSeconds(5), 0.5f, 0.5f);
 
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, ignoreResist: false);
 
         if (TryComp<HandsComponent>(target, out var hands)
             && _hands.TryGetActiveItem((target, hands), out var activeItem)
@@ -405,7 +405,7 @@ public partial class SharedMartialArtsSystem
             || HasComp<CombativesRestrainComponent>(ent))
             return;
 
-        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, applyResistances: true);
+        _stamina.TakeStaminaDamage(target, proto.StaminaDamage, ignoreResist: false);
 
         _audio.PlayPvs(new SoundPathSpecifier("/Audio/Weapons/genhit2.ogg"), target);
         ComboPopup(ent, target, proto.ID);
