@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 
-using System.Linq;
 using Content.Goobstation.Shared.CloneProjector;
 using Content.Goobstation.Shared.CloneProjector.Clone;
 using Content.Goobstation.Shared.Roles.Components;
@@ -22,6 +21,7 @@ using Content.Shared.Mind;
 using Content.Shared.Mind.Components;
 using Content.Shared.Mobs;
 using Content.Shared.Mobs.Systems;
+using Content.Shared.Nutrition.Components;
 using Content.Shared.Popups;
 using Content.Shared.Radio.Components;
 using Content.Shared.Roles;
@@ -36,6 +36,7 @@ using Robust.Shared.Physics.Systems;
 using Robust.Shared.Prototypes;
 using Robust.Shared.Timing;
 using Robust.Shared.Utility;
+using System.Linq;
 
 namespace Content.Goobstation.Server.CloneProjector;
 
@@ -291,6 +292,7 @@ public sealed partial class CloneProjectorSystem : SharedCloneProjectorSystem
             return false;
         }
 
+        RemComp<ButcherableComponent>(clone);
         var ghostRole = EnsureComp<GhostRoleComponent>(clone); // todo marty unfuck this and make gemini mindrole
         ghostRole.RoleName = Loc.GetString(projector.Comp.GhostRoleName);
         ghostRole.RoleDescription = Loc.GetString(projector.Comp.GhostRoleDescription);
