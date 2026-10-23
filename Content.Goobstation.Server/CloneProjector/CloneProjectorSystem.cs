@@ -292,7 +292,6 @@ public sealed partial class CloneProjectorSystem : SharedCloneProjectorSystem
             return false;
         }
 
-        RemComp<ButcherableComponent>(clone);
         var ghostRole = EnsureComp<GhostRoleComponent>(clone); // todo marty unfuck this and make gemini mindrole
         ghostRole.RoleName = Loc.GetString(projector.Comp.GhostRoleName);
         ghostRole.RoleDescription = Loc.GetString(projector.Comp.GhostRoleDescription);
