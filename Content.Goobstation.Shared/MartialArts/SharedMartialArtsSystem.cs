@@ -238,11 +238,12 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     }
 
     // Wormix EDIT Start
-    // ���� �� ������������� ������� ��������� ����� �� ������ �������� � �����, ������. ��� ��������� ��������������, ��� �� �������� ��������� ���� ���� ��-�� ��������� �����������.
-    public bool IsWeaponAllowed(EntityUid user, EntityUid weapon, CanPerformComboComponent comp)
+    public bool IsWeaponAllowed(EntityUid user, EntityUid weapon)
     {
-        return comp.ArtsForms
-            .Any(m => IsWeaponAllowedForMartialArt(user, weapon, m));
+        if (!TryComp<MartialArtsKnowledgeComponent>(user, out var knowledge))
+            return false;
+
+        return IsWeaponAllowedForMartialArt(user, weapon, knowledge.MartialArtsForm);
     }
 
     private bool IsWeaponAllowedForMartialArt(EntityUid user, EntityUid weapon, MartialArtsForms martialArt)
@@ -428,7 +429,6 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
         if (TryComp<CanPerformComboComponent>(ent, out var comboComponent))
         {
             comboComponent.AllowedCombos.Clear();
-            comboComponent.ArtsForms.Clear(); // EDIT Wormix
         }
 
         RemCompDeferred<DragonKungFuTimerComponent>(ent);
@@ -617,7 +617,6 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
     private void LoadCombos(ProtoId<ComboListPrototype> list, CanPerformComboComponent combo)
     {
         combo.AllowedCombos.Clear();
-        combo.ArtsForms.Clear();
         if (!_proto.TryIndex(list, out var comboListPrototype))
             return;
         foreach (var item in comboListPrototype.Combos)
@@ -625,7 +624,6 @@ public abstract partial class SharedMartialArtsSystem : EntitySystem
             // EDIT Wormix Start
             var proto = _proto.Index(item);
             combo.AllowedCombos.Add(proto);
-            combo.ArtsForms.Add(proto.MartialArtsForm);
             // EDIT Wormix End
         }
     }

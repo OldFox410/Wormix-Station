@@ -25,10 +25,7 @@ public sealed partial class CanPerformComboComponent : Component
 
     [DataField]
     public List<ComboPrototype> AllowedCombos = new();
-    // EDIT Wormix Start
-    [DataField, AutoNetworkedField]
-    public HashSet<MartialArtsForms> ArtsForms = new();
-    // EDIT Wormix End
+
     [DataField]
     public List<ProtoId<ComboPrototype>> RoundstartCombos = new();
 

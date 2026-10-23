@@ -463,8 +463,8 @@ public partial class SharedMartialArtsSystem
 
     private void OnRestrainAttackAttempt(Entity<CombativesRestrainComponent> ent, ref AttackAttemptEvent args)
     {
-        if (!TryComp<CanPerformComboComponent>(ent, out var performer)
-            || !performer.ArtsForms.Contains(MartialArtsForms.Combatives))
+        if (!TryComp<MartialArtsKnowledgeComponent>(ent, out var performer)
+            || performer.MartialArtsForm != MartialArtsForms.Combatives)
             args.Cancel();
     }
 
