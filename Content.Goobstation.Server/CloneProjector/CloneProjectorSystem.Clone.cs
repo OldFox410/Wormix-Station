@@ -61,8 +61,8 @@ public partial class CloneProjectorSystem
 
     private void OnInit(Entity<HolographicCloneComponent> clone, ref MapInitEvent args)
     {
-        RemComp<ButcherableComponent>(clone);
-        RemComp<CanEnterCryostorageComponent>(clone);
+        RemComp<ButcherableComponent>(clone); // Wormix Edit
+        RemComp<CanEnterCryostorageComponent>(clone); // Wormix Edit
         foreach (var part in _body.GetBodyChildren(clone))
         {
             if (!TryComp(part.Id, out WoundableComponent? woundable))
