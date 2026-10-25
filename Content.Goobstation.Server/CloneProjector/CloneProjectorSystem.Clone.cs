@@ -6,6 +6,7 @@ using Content.Goobstation.Shared.Temperature;
 using Content.Server.Emp;
 using Content.Shared._Shitmed.Medical.Surgery.Wounds.Components;
 using Content.Shared._Shitmed.Targeting;
+using Content.Shared.Bed.Cryostorage;
 using Content.Shared.Body.Systems;
 using Content.Shared.Damage;
 using Content.Shared.Emp;
@@ -61,6 +62,7 @@ public partial class CloneProjectorSystem
     private void OnInit(Entity<HolographicCloneComponent> clone, ref MapInitEvent args)
     {
         RemComp<ButcherableComponent>(clone);
+        RemComp<CanEnterCryostorageComponent>(clone);
         foreach (var part in _body.GetBodyChildren(clone))
         {
             if (!TryComp(part.Id, out WoundableComponent? woundable))
